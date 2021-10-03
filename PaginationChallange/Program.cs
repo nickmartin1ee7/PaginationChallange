@@ -1,15 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using CsvHelper;
 using Microsoft.VisualBasic.FileIO;
 
 namespace PaginationChallange
 {
     internal static class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
-            List<Person> people = ReadPeopleFromCsv("targets.csv");
+            List<Person> people = await ReadPeopleFromCsvAsync("targets.csv");
 
             PaginatedMenu();
         }
@@ -19,44 +23,12 @@ namespace PaginationChallange
             throw new NotImplementedException();
         }
 
-        private static List<Person> ReadPeopleFromCsv(string targetsCsv)
+        private static async Task<List<Person>> ReadPeopleFromCsvAsync(string targetCsvFile)
         {
-            var people = new List<Person>();
+            using var sr = new StreamReader(targetCsvFile);
+            using var csvReader = new CsvReader(sr, CultureInfo.InvariantCulture);
 
-            using TextFieldParser parser = new(targetsCsv);
-            parser.TextFieldType = FieldType.Delimited;
-            parser.SetDelimiters(",");
-
-            bool isHeader = true;
-            
-            while (!parser.EndOfData)
-            {
-                if (isHeader)
-                {
-                    _ = parser.ReadFields();
-                    isHeader = false;
-                    continue;
-                }
-                
-                var fields = parser.ReadFields();
-
-                var salary = fields[4]
-                    .Replace("$", "")
-                    .Replace(",", "");
-
-                var birthDate = string.IsNullOrWhiteSpace(fields[3])
-                    ? default
-                    : DateTime.Parse(fields[3]);
-                
-                people.Add(new Person
-                {
-                    Id = uint.Parse(fields[0]),
-                    FirstName = fields[1],
-                    LastName = fields[2],
-                    BirthDate = birthDate,
-                    Salary = decimal.Parse(salary)
-                });
-            }
+            var people = csvReader.GetRecords<Person>().ToList();
 
             return people;
         }

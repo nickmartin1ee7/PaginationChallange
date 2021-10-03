@@ -1,0 +1,65 @@
+name: CI/CD
+
+on:
+  workflow_dispatch:  
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore
+      
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
+  
+  publish:
+    if: ${{ github.ref == 'refs/heads/main' }}
+    needs: [ build, test ]
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore -c Release -o build
+    - name: Publish
+      run: dotnet publish --no-restore -c Release -o release
+    - name: GitHub Publish - Archive
+      run: zip -r release.zip release
+    - name: GitHub Publish - Release
+      uses: softprops/action-gh-release@v1      
+      with:
+        tag_name: ${{ github.workflow }}
+        name: Release ${{ github.run_number }}
+        draft: false
+        prerelease: false
+        files: release.zip

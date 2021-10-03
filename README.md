@@ -1,5 +1,8 @@
 # PaginationChallange
+
 A simple console application demonstrating pagination functionality while reading from a CSV file.
+
+Feel free to try out the Console App Release!
 
 ## Example
 

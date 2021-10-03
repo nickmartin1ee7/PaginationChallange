@@ -52,7 +52,7 @@ jobs:
     - name: Build
       run: dotnet build --no-restore -c Release -o build
     - name: Publish
-      run: dotnet publish --no-restore -c Release -o release -a win-x86
+      run: dotnet publish --no-restore -c Release -o release
     - name: GitHub Publish - Archive
       run: powershell Compress-Archive -Path release\* -DestinationPath PaginationChallange-Release.zip
     - name: GitHub Publish - Release

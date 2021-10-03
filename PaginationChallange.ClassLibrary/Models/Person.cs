@@ -1,7 +1,7 @@
 ﻿using System;
 using CsvHelper.Configuration.Attributes;
 
-namespace PaginationChallange
+namespace PaginationChallange.ClassLibrary.Models
 {
     public class Person
     {

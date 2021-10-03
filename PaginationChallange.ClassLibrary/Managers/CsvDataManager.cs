@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using CsvHelper;
 
-namespace PaginationChallange
+namespace PaginationChallange.ClassLibrary.Managers
 {
     public static class CsvDataManager
     {

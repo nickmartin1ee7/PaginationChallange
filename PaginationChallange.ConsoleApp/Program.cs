@@ -1,4 +1,7 @@
-﻿namespace PaginationChallange
+﻿using PaginationChallange.ClassLibrary.Managers;
+using PaginationChallange.ClassLibrary.Models;
+
+namespace PaginationChallange
 {
     internal static class Program
     {

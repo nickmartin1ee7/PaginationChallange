@@ -2,7 +2,7 @@
 using PaginationChallange.Extensions;
 using static System.Console;
 
-namespace PaginationChallange
+namespace PaginationChallange.ClassLibrary.Models
 {
     public class PaginatedMenu<T>
     {

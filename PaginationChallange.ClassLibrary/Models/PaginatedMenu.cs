@@ -16,7 +16,11 @@ namespace PaginationChallange.ClassLibrary.Models
                 throw new ArgumentOutOfRangeException(nameof(pageLimit),
                     "Page size must be positive and greater than 0");
 
-            _pageLimit = pageLimit;
+            if (collection.Length < pageLimit)
+                _pageLimit = collection.Length;
+            else
+                _pageLimit = pageLimit;
+
             _collection = collection;
         }
 

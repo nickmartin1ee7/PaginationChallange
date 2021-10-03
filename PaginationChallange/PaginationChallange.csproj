@@ -6,13 +6,13 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <None Update="targets.csv">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </None>
+        <None Update="targets.csv">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="CsvHelper" Version="27.1.1" />
+        <PackageReference Include="CsvHelper" Version="27.1.1"/>
     </ItemGroup>
 
 </Project>

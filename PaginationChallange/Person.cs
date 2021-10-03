@@ -19,5 +19,10 @@ namespace PaginationChallange
         
         [Name("salary")]
         public string Salary { get; set; }
+
+        public override string ToString()
+            => BirthDate is null
+                ? $"{Id}, {FirstName} {LastName}; {Salary} per year"
+                : $"{Id}, {FirstName} {LastName}, born {BirthDate}; {Salary} per year";
     }
 }

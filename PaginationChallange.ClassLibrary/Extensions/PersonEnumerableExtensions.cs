@@ -18,6 +18,6 @@ namespace PaginationChallange.Extensions
         public static IEnumerable<Person> OrderByFullName(this IEnumerable<Person> people) =>
             people
                 .OrderBy(p => p.LastName)
-                .OrderBy(p => p.FirstName);
+                .ThenBy(p => p.FirstName);
     }
 }
